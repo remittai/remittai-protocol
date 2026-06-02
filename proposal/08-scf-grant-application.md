@@ -311,16 +311,17 @@ All Soroban smart contracts will be open-sourced under MIT license:
 
 The AI routing engine and fraud scoring library will also be open-sourced, providing reusable tools for any Stellar-based payment project.
 
-**GitHub:** [github.com/remittai] (to be created upon award)
+**GitHub:** [github.com/RemittAI-com/remittai-protocol](https://github.com/RemittAI-com/remittai-protocol)
 
 ---
 
 ## LINKS
 
-- Litepaper: [To be published at remittai.com]
-- Testnet Token: https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB
+- Website: [remittai.com](https://remittai.com)
+- Litepaper: [github.com/RemittAI-com/remittai-protocol/blob/main/proposal/litepaper.md](https://github.com/RemittAI-com/remittai-protocol/blob/main/proposal/litepaper.md)
+- GitHub: [github.com/RemittAI-com/remittai-protocol](https://github.com/RemittAI-com/remittai-protocol)
+- Testnet Token: [stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB](https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB)
 - Twitter/X: [@REMITTai_](https://x.com/REMITTai_)
-- Discord: [To be created]
 
 ---
 
