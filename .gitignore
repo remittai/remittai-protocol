@@ -1,4 +1,30 @@
+# Secrets — NEVER commit these
 .env
-node_modules/
 *.secret
 keys/
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+target/
+dist/
+*.wasm
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# Logs
+*.log
+npm-debug.log*
