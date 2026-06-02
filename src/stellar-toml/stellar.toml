@@ -1,0 +1,29 @@
+# RemittAI ($RMTAI) — stellar.toml
+# This file should be hosted at: https://remittai.io/.well-known/stellar.toml
+# See: https://developers.stellar.org/docs/issuing-assets/publishing-asset-info
+
+[DOCUMENTATION]
+ORG_NAME = "RemittAI"
+ORG_URL = "https://remittai.io"
+ORG_DESCRIPTION = "AI-powered remittance protocol on Stellar. Sub-1% fees, 5-second settlement, mobile money payouts."
+ORG_TWITTER = "REMITTai_"
+ORG_GITHUB = "remittai"
+ORG_LOGO = "https://remittai.io/logo.png"
+
+[[CURRENCIES]]
+code = "RMTAI"
+issuer = "G_ISSUER_PUBLIC_KEY_HERE"
+display_decimals = 7
+name = "RemittAI"
+desc = "Utility token powering the RemittAI AI-optimized remittance protocol. Used for fee discounts, liquidity staking, AI oracle rewards, and governance."
+conditions = "Fixed supply of 1,000,000,000 RMTAI. Issuer account locked — no additional minting possible. 20% of protocol fees used for buyback and burn."
+image = "https://remittai.io/rmtai-icon.png"
+fixed_number = 1000000000
+is_asset_anchored = false
+redemption_instructions = "RMTAI is a utility token, not redeemable for fiat. Use on the RemittAI protocol for fee discounts and staking."
+
+[PRINCIPALS]
+# Add team members here
+# [[PRINCIPALS]]
+# name = "Founder Name"
+# email = "founder@remittai.io"

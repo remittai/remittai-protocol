@@ -1,0 +1,20 @@
+{
+  "name": "remittai",
+  "version": "0.1.0",
+  "description": "RemittAI - AI-Powered Remittance Token on Stellar",
+  "type": "module",
+  "scripts": {
+    "issue:testnet": "node scripts/issue-token.js --network testnet",
+    "issue:mainnet": "node scripts/issue-token.js --network mainnet",
+    "setup:trustline": "node scripts/setup-trustline.js",
+    "setup:dex": "node scripts/setup-dex-offers.js",
+    "lock:issuer": "node scripts/lock-issuer.js",
+    "test:path-payment": "node scripts/test-path-payment.js",
+    "ai:route": "node src/ai-router/index.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {}
+}

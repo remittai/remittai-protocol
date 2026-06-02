@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemittAI ($RMTAI) — AI-Powered Remittances on Stellar</title>
+    <meta name="description" content="Send money home for under 1% fees. 5-second settlement. AI-optimized routing. Built on Stellar.">
+    <meta property="og:title" content="RemittAI — AI-Powered Remittances on Stellar">
+    <meta property="og:description" content="Send money home for under 1% fees. 5-second settlement. No bank account needed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://remittai.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@REMITTai_">
+    <meta name="twitter:title" content="RemittAI — AI-Powered Remittances on Stellar">
+    <meta name="twitter:description" content="Send money home for under 1% fees. 5-second settlement. No bank account needed.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --blue-light: #dbeafe;
+            --green: #16a34a;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --gray-light: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 100;
+            padding: 1rem 2rem;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        .logo span { color: var(--blue); }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--dark); }
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--blue);
+            color: var(--white);
+        }
+        .btn-primary:hover { background: var(--blue-dark); }
+        .btn-outline {
+            background: transparent;
+            color: var(--blue);
+            border: 2px solid var(--blue);
+        }
+        .btn-outline:hover {
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--white) 0%, var(--blue-light) 100%);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--blue-light);
+            color: var(--blue);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--blue);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+        .hero h1 span { color: var(--blue); }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--blue);
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-dark {
+            background: var(--dark);
+            color: var(--white);
+            max-width: 100%;
+            padding: 5rem 2rem;
+        }
+        .section-dark .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-gray {
+            background: var(--gray-light);
+            max-width: 100%;
+            padding: 5rem 2rem;
+        }
+        .section-gray .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        .section-dark .section-subtitle { color: #94a3b8; }
+
+        /* Problem */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .problem-card {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .problem-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ef4444;
+        }
+        .problem-card h3 {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+        .problem-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* How it works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .step {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: var(--white);
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .step h3 { margin-bottom: 0.5rem; }
+        .step p { color: var(--gray); font-size: 0.9rem; }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Comparison */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+        .comparison-table th {
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .highlight-row {
+            background: var(--blue-light);
+            font-weight: 600;
+        }
+        .check { color: var(--green); font-weight: 700; }
+        .cross { color: #ef4444; font-weight: 700; }
+
+        /* Token */
+        .token-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .token-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .token-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .token-detail-label { color: var(--gray); }
+        .token-detail-value { font-weight: 600; }
+        .utility-list { list-style: none; }
+        .utility-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: start;
+        }
+        .utility-list li span { color: var(--blue); font-weight: 700; }
+
+        /* Roadmap */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .phase {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 2rem;
+        }
+        .phase-label {
+            display: inline-block;
+            background: var(--blue);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .phase-label.active {
+            background: var(--green);
+        }
+        .phase h3 { margin-bottom: 0.75rem; }
+        .phase ul {
+            list-style: none;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .phase ul li {
+            padding: 0.3rem 0;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .phase ul li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, var(--blue-light) 0%, var(--white) 100%);
+        }
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .cta p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #94a3b8;
+            padding: 3rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .footer-brand .logo { color: var(--white); }
+        .footer-brand p { margin-top: 0.5rem; font-size: 0.85rem; }
+        .footer-links h4 {
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        .footer-links a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 0.2rem 0;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid #1e293b;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .hero-stats { gap: 2rem; }
+            .nav-links { display: none; }
+            .token-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 1.75rem; }
+            .comparison-table { font-size: 0.8rem; }
+            .comparison-table th, .comparison-table td { padding: 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="logo">Remitt<span>AI</span></a>
+        <div class="nav-links">
+            <a href="#problem">Problem</a>
+            <a href="#how">How It Works</a>
+            <a href="#ai">AI Layer</a>
+            <a href="#token">Token</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB" target="_blank" class="btn btn-outline">View on Stellar</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-badge">Live on Stellar Testnet</div>
+    <h1>Send Money Home for <span>Under 1%</span></h1>
+    <p>AI-powered remittances on Stellar. 5-second settlement. No bank account needed. Crypto is invisible.</p>
+    <div class="hero-buttons">
+        <a href="#token" class="btn btn-primary">Read the Litepaper</a>
+        <a href="https://discord.gg/remittai" target="_blank" class="btn btn-outline">Join Discord</a>
+    </div>
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-value">&lt;1%</div>
+            <div class="stat-label">Total Fee</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">5 sec</div>
+            <div class="stat-label">Settlement</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">$0.00001</div>
+            <div class="stat-label">Network Cost</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">1B</div>
+            <div class="stat-label">Fixed Supply</div>
+        </div>
+    </div>
+</div>
+
+<!-- Problem -->
+<section id="problem">
+    <h2 class="section-title">The Remittance Industry is Broken</h2>
+    <p class="section-subtitle">$800 billion sent across borders every year. $48 billion extracted in fees from the world's poorest families.</p>
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="number">6.2%</div>
+            <h3>Average Fee</h3>
+            <p>The global average cost to send $200. The UN target is 3%. Intra-Africa fees hit 15%+. Banks charge up to 25%.</p>
+        </div>
+        <div class="problem-card">
+            <div class="number">3-5d</div>
+            <h3>Settlement Time</h3>
+            <p>Bank wires take 3-5 business days. Even "instant" services often hold funds for 24-48 hours behind the scenes.</p>
+        </div>
+        <div class="problem-card">
+            <div class="number">1.4B</div>
+            <h3>Unbanked Adults</h3>
+            <p>Traditional remittance requires bank accounts. The people who depend most on remittances can't access the system.</p>
+        </div>
+        <div class="problem-card">
+            <div class="number">2-4%</div>
+            <h3>Hidden FX Markup</h3>
+            <p>Providers advertise low fees but embed profit in unfavorable exchange rates. The real cost is often double what's shown.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<div class="section-gray" id="how">
+    <div class="section-inner">
+        <h2 class="section-title">How RemittAI Works</h2>
+        <p class="section-subtitle">The user sends fiat. The recipient receives fiat. Blockchain is invisible.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Enter Amount</h3>
+                <p>Open the app. Enter how much to send and the recipient's phone number. See exactly what they'll receive.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>AI Finds Best Route</h3>
+                <p>Our AI scans Stellar's DEX in under 100ms, evaluating every possible path to deliver maximum value.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Atomic Settlement</h3>
+                <p>Stellar's path payment converts currencies in a single atomic transaction. 5-second finality. No counterparty risk.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Recipient Gets Paid</h3>
+                <p>Funds arrive via mobile money (M-Pesa, GCash), bank deposit, or cash pickup. No crypto knowledge needed.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Layer -->
+<div class="section-dark" id="ai">
+    <div class="section-inner">
+        <h2 class="section-title">The AI Advantage</h2>
+        <p class="section-subtitle">AI is not a buzzword bolted onto a token. It's the core product.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">&#9889;</div>
+                <h3>Smart Routing</h3>
+                <p>Every transfer is optimized in real-time. The AI evaluates all paths on Stellar's DEX — order books, AMM pools, multi-hop routes — and selects the cheapest one.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#9883;</div>
+                <h3>FX Optimization</h3>
+                <p>For recurring senders, the AI learns optimal send windows based on historical FX patterns. Get alerts when rates are favorable.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#128737;</div>
+                <h3>Fraud Detection</h3>
+                <p>Every transaction gets a risk score based on behavioral analysis, velocity checks, and sanctions screening. Low-risk transfers settle instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">&#128200;</div>
+                <h3>Liquidity Prediction</h3>
+                <p>Predicts corridor demand patterns — payday spikes, holiday surges — and pre-positions liquidity to reduce slippage.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison -->
+<section>
+    <h2 class="section-title">How We Compare</h2>
+    <p class="section-subtitle">RemittAI vs the incumbents and crypto competitors.</p>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Provider</th>
+                <th>Fees</th>
+                <th>Speed</th>
+                <th>AI</th>
+                <th>Mobile Money</th>
+                <th>No Bank Needed</th>
+                <th>Global</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="highlight-row">
+                <td>RemittAI</td>
+                <td>&lt;1%</td>
+                <td>5 seconds</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td>Western Union</td>
+                <td>5-10%</td>
+                <td>Hours-Days</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="check">Yes (cash)</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td>Wise</td>
+                <td>0.5-2%</td>
+                <td>1-2 Days</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td>Remittix (RTX)</td>
+                <td>~1%</td>
+                <td>Minutes</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td>Ripple (XRP)</td>
+                <td>Varies</td>
+                <td>3-5 sec</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td>SurgePay</td>
+                <td>Low</td>
+                <td>Seconds</td>
+                <td class="cross">No</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+                <td class="cross">Africa only</td>
+            </tr>
+            <tr>
+                <td>USDT on Tron</td>
+                <td>~$1</td>
+                <td>Seconds</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="cross">No</td>
+                <td class="check">Yes</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- Token -->
+<div class="section-gray" id="token">
+    <div class="section-inner">
+        <h2 class="section-title">The $RMTAI Token</h2>
+        <p class="section-subtitle">Fixed supply. Real utility. Revenue-backed burns.</p>
+        <div class="token-grid">
+            <div class="token-info">
+                <h3>Token Details</h3>
+                <div class="token-detail">
+                    <span class="token-detail-label">Network</span>
+                    <span class="token-detail-value">Stellar</span>
+                </div>
+                <div class="token-detail">
+                    <span class="token-detail-label">Total Supply</span>
+                    <span class="token-detail-value">1,000,000,000</span>
+                </div>
+                <div class="token-detail">
+                    <span class="token-detail-label">Launch Price</span>
+                    <span class="token-detail-value">$0.020</span>
+                </div>
+                <div class="token-detail">
+                    <span class="token-detail-label">Public Sale</span>
+                    <span class="token-detail-value">30%</span>
+                </div>
+                <div class="token-detail">
+                    <span class="token-detail-label">Team Vesting</span>
+                    <span class="token-detail-value">12mo cliff + 36mo linear</span>
+                </div>
+                <div class="token-detail">
+                    <span class="token-detail-label">Supply</span>
+                    <span class="token-detail-value">Fixed — no inflation</span>
+                </div>
+            </div>
+            <div>
+                <h3>Token Utility</h3>
+                <ul class="utility-list">
+                    <li><span>01</span> Pay remittance fees in $RMTAI for 33% discount (0.50% vs 0.75%)</li>
+                    <li><span>02</span> Stake to provide corridor liquidity and earn protocol fees (5-12% APY)</li>
+                    <li><span>03</span> AI agents earn $RMTAI for serving FX feeds, routing, and fraud scoring</li>
+                    <li><span>04</span> Vote on corridor expansion, fee structures, and grant allocations</li>
+                    <li><span>05</span> 20% of all protocol fees buy back and burn $RMTAI permanently</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Roadmap -->
+<div class="section-dark" id="roadmap">
+    <div class="section-inner">
+        <h2 class="section-title">Roadmap</h2>
+        <p class="section-subtitle">From testnet to global remittance protocol in 18 months.</p>
+        <div class="roadmap">
+            <div class="phase">
+                <div class="phase-label active">Now</div>
+                <h3>Phase 0 — Foundation</h3>
+                <ul>
+                    <li>Token issued on Stellar testnet</li>
+                    <li>Soroban contracts written</li>
+                    <li>AI routing engine functional</li>
+                    <li>Security audit in progress</li>
+                    <li>Anchor partnerships forming</li>
+                </ul>
+            </div>
+            <div class="phase">
+                <div class="phase-label">Months 4-6</div>
+                <h3>Phase 1 — Launch</h3>
+                <ul>
+                    <li>Token presale ($4M target)</li>
+                    <li>Mainnet deployment</li>
+                    <li>First live corridor</li>
+                    <li>Mobile app beta</li>
+                    <li>First CEX listing</li>
+                </ul>
+            </div>
+            <div class="phase">
+                <div class="phase-label">Months 7-12</div>
+                <h3>Phase 2 — Growth</h3>
+                <ul>
+                    <li>5-8 active corridors</li>
+                    <li>Mobile money integrations</li>
+                    <li>AI FX optimizer launch</li>
+                    <li>Enterprise API beta</li>
+                    <li>$10M/month volume target</li>
+                </ul>
+            </div>
+            <div class="phase">
+                <div class="phase-label">Months 13-18</div>
+                <h3>Phase 3 — Scale</h3>
+                <ul>
+                    <li>10-15 corridors live</li>
+                    <li>Enterprise API GA</li>
+                    <li>DAO governance transition</li>
+                    <li>Protocol self-sustaining</li>
+                    <li>$50-100M/month volume</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Your Family Deserves Better Than 6% Fees</h2>
+    <p>Join the community building the future of cross-border payments.</p>
+    <div class="cta-buttons">
+        <a href="https://discord.gg/remittai" target="_blank" class="btn btn-primary">Join Discord</a>
+        <a href="https://x.com/REMITTai_" target="_blank" class="btn btn-outline">Follow on X</a>
+        <a href="https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB" target="_blank" class="btn btn-outline">View Token on Stellar</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="#" class="logo">Remitt<span>AI</span></a>
+            <p>AI-powered remittances on Stellar.<br>Under 1% fees. 5-second settlement.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Project</h4>
+            <a href="#problem">Problem</a>
+            <a href="#how">How It Works</a>
+            <a href="#ai">AI Layer</a>
+            <a href="#token">Token</a>
+            <a href="#roadmap">Roadmap</a>
+        </div>
+        <div class="footer-links">
+            <h4>Community</h4>
+            <a href="https://x.com/REMITTai_" target="_blank">Twitter / X</a>
+            <a href="https://discord.gg/remittai" target="_blank">Discord</a>
+            <a href="https://github.com/remittai" target="_blank">GitHub</a>
+        </div>
+        <div class="footer-links">
+            <h4>Resources</h4>
+            <a href="https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB" target="_blank">Stellar Explorer</a>
+            <a href="#">Litepaper (PDF)</a>
+            <a href="mailto:founder@remittai.com">Contact</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>$RMTAI is a utility token. This site does not constitute financial advice or an offer to sell securities. Do your own research.</p>
+        <p style="margin-top:0.5rem">2026 RemittAI. Built on Stellar.</p>
+    </div>
+</footer>
+
+</body>
+</html>
