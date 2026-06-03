@@ -1,0 +1,72 @@
+name: Build & Deploy Soroban Contracts
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'contracts/**'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install Stellar CLI
+        run: cargo install stellar-cli --locked
+
+      - name: Build staking contract
+        run: |
+          cd contracts/staking
+          stellar contract build
+
+      - name: Build fee-collector contract
+        run: |
+          cd contracts/fee-collector
+          stellar contract build
+
+      - name: Upload WASM artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: soroban-contracts
+          path: |
+            contracts/staking/target/wasm32-unknown-unknown/release/*.wasm
+            contracts/fee-collector/target/wasm32-unknown-unknown/release/*.wasm
+
+      - name: Deploy staking contract to testnet
+        env:
+          STELLAR_SECRET_KEY: ${{ secrets.DEPLOYER_SECRET_KEY }}
+        run: |
+          WASM_FILE=$(find contracts/staking/target -name "*.wasm" | head -1)
+          echo "Deploying staking contract: $WASM_FILE"
+          stellar contract deploy \
+            --wasm "$WASM_FILE" \
+            --source "$STELLAR_SECRET_KEY" \
+            --network testnet \
+            | tee staking-contract-id.txt
+          echo "STAKING_CONTRACT_ID=$(cat staking-contract-id.txt)" >> $GITHUB_ENV
+
+      - name: Deploy fee-collector contract to testnet
+        env:
+          STELLAR_SECRET_KEY: ${{ secrets.DEPLOYER_SECRET_KEY }}
+        run: |
+          WASM_FILE=$(find contracts/fee-collector/target -name "*.wasm" | head -1)
+          echo "Deploying fee-collector contract: $WASM_FILE"
+          stellar contract deploy \
+            --wasm "$WASM_FILE" \
+            --source "$STELLAR_SECRET_KEY" \
+            --network testnet \
+            | tee fee-collector-contract-id.txt
+          echo "FEE_COLLECTOR_CONTRACT_ID=$(cat fee-collector-contract-id.txt)" >> $GITHUB_ENV
+
+      - name: Print contract IDs
+        run: |
+          echo "=== Deployed Contract IDs ==="
+          echo "Staking: $(cat staking-contract-id.txt)"
+          echo "Fee Collector: $(cat fee-collector-contract-id.txt)"
