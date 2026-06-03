@@ -77,8 +77,10 @@ remittai-protocol/
 - [x] DEX liquidity created (RMTAI/USDC @ $0.02, RMTAI/XLM @ 0.08 XLM)
 - [x] AI routing engine v1 (path scoring, fraud detection)
 - [x] Soroban contracts written (staking + fee collector)
+- [x] Soroban contracts deployed to testnet
 - [x] Landing page deployed (remittai.com)
-- [ ] Soroban contracts deployed to testnet
+- [x] stellar.toml live at remittai.com/.well-known/stellar.toml
+- [x] SCF Build Award interest form submitted
 - [ ] Anchor partnerships signed
 - [ ] Mobile app beta
 - [ ] Mainnet launch
@@ -108,11 +110,17 @@ npm run ai:route
 - **Issuer:** `GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB`
 - **Distribution:** `GCDTLUMFMMPTB65ZARGO6KHZQ3ZZDBISP3RTHDZTVZS4LNVCHH3BJ2Q6`
 
+## Soroban Contracts (Testnet)
+
+- **Staking:** `CDNU5JUHYVDBUSIS5QALWXD3X56II7YIQU7TDQKBV42AKA3HJF4A7DDA`
+- **Fee Collector:** `CDYWYDDLVZVZDANQJSAAPTW4KS4ED56BX2I3MJ4NX2TNMDR4SMBXG37L`
+
 ## Links
 
 - Website: [remittai.com](https://remittai.com)
 - Twitter/X: [@REMITTai_](https://x.com/REMITTai_)
 - Litepaper: [proposal/litepaper.md](proposal/litepaper.md)
+- GitHub: [github.com/remittai](https://github.com/remittai)
 
 ## License
 

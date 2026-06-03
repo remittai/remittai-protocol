@@ -229,11 +229,11 @@ Even capturing 0.01% of global remittance volume = $80M in annual throughput = $
 
 ## Links
 
-- Website: [remittai.io] — *to be registered*
+- Website: [remittai.com](https://remittai.com)
 - Twitter/X: [@REMITTai_](https://x.com/REMITTai_)
-- Discord: [discord.gg/remittai] — *to be created*
-- GitHub: [github.com/remittai] — *to be created*
-- Stellar Asset: [stellar.expert/asset/RMTAI] — *to be issued*
+- GitHub: [github.com/remittai/remittai-protocol](https://github.com/remittai/remittai-protocol)
+- Stellar Asset: [RMTAI on Stellar Expert](https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB)
+- stellar.toml: [remittai.com/.well-known/stellar.toml](https://remittai.com/.well-known/stellar.toml)
 
 ---
 

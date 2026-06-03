@@ -75,8 +75,8 @@ Stellar is not a superficial integration — it is the core infrastructure that 
 
 | Contract | Function | Status |
 |---|---|---|
-| `rmtai-staking` | Tiered liquidity provider staking (Bronze/Silver/Gold), reward calculation, 7-day lock period | Written, ready for testnet |
-| `rmtai-fee-collector` | Protocol fee collection (0.50-0.75%), automated distribution (20% burn, 40% staking, 30% treasury, 10% AI fund) | Written, ready for testnet |
+| `rmtai-staking` | Tiered liquidity provider staking (Bronze/Silver/Gold), reward calculation, 7-day lock period | Deployed to testnet |
+| `rmtai-fee-collector` | Protocol fee collection (0.50-0.75%), automated distribution (20% burn, 40% staking, 30% treasury, 10% AI fund) | Deployed to testnet |
 | `rmtai-governance` | On-chain voting for corridor expansion, fee changes, grant allocations | To be built in Tranche 2 |
 | `rmtai-escrow` | Conditional transfers for compliance holds and dispute resolution | To be built in Tranche 2 |
 
@@ -113,15 +113,17 @@ Path payments are Stellar's killer feature for remittances — no other chain ca
 - DEX liquidity pools created (RMTAI/USDC and RMTAI/XLM pairs on testnet)
 - AI Routing Engine v1 functional — queries Stellar Horizon `/paths` API, scores routes by cost/hops/liquidity, selects optimal path
 - Fraud scoring engine with behavioral analysis, velocity checks, and structuring detection
-- Soroban staking contract written in Rust (tiered rewards, lock periods, claim mechanism)
-- Soroban fee collector contract written in Rust (fee collection, burn/staking/treasury distribution)
-- stellar.toml drafted and ready for domain hosting
+- Soroban staking contract deployed to testnet: `CDNU5JUHYVDBUSIS5QALWXD3X56II7YIQU7TDQKBV42AKA3HJF4A7DDA`
+- Soroban fee collector contract deployed to testnet: `CDYWYDDLVZVZDANQJSAAPTW4KS4ED56BX2I3MJ4NX2TNMDR4SMBXG37L`
+- stellar.toml live at https://remittai.com/.well-known/stellar.toml
 - Full proposal package: litepaper, tokenomics, competitive analysis, go-to-market strategy
 
 ### Testnet Links
 - Token: [View on Stellar Expert](https://stellar.expert/explorer/testnet/asset/RMTAI-GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB)
 - Issuer: GBEBPSRQCVC5ZVVHJSHKR37G2EL4F2Y6GIHAY4JD2WVG3KSKUNZSRNGB
 - Distribution: GCDTLUMFMMPTB65ZARGO6KHZQ3ZZDBISP3RTHDZTVZS4LNVCHH3BJ2Q6
+- Staking Contract: CDNU5JUHYVDBUSIS5QALWXD3X56II7YIQU7TDQKBV42AKA3HJF4A7DDA
+- Fee Collector Contract: CDYWYDDLVZVZDANQJSAAPTW4KS4ED56BX2I3MJ4NX2TNMDR4SMBXG37L
 
 ### Validated Market Need
 - $800B+ global remittance market with 6.2% average fees (World Bank)
