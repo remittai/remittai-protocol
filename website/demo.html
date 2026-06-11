@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RemittAI Testnet Demo — AI-Powered Remittances on Stellar</title>
+<meta property="og:title" content="RemittAI Testnet Demo">
+<meta property="og:description" content="Try AI-powered remittances on Stellar testnet. See how our AI router finds the cheapest path.">
+<meta property="og:url" content="https://remittai.com/demo.html">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0e17;color:#e2e8f0;min-height:100vh;line-height:1.6}
+a{color:#60a5fa;text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{max-width:720px;margin:0 auto;padding:20px}
+
+header{text-align:center;padding:40px 20px 20px}
+header h1{font-size:2em;font-weight:700;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+header p{color:#94a3b8;margin-top:8px;font-size:1.05em}
+.badge{display:inline-block;margin-top:12px;padding:4px 12px;border-radius:20px;font-size:0.8em;background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.3)}
+
+.card{background:#131a2b;border:1px solid #1e293b;border-radius:12px;padding:24px;margin:20px 0}
+.card h2{font-size:1.2em;margin-bottom:16px;color:#f1f5f9}
+
+.form-row{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.form-group{flex:1;min-width:140px}
+.form-group label{display:block;font-size:0.85em;color:#94a3b8;margin-bottom:4px}
+.form-group select,.form-group input{width:100%;padding:10px 12px;background:#0f1525;border:1px solid #2d3748;border-radius:8px;color:#e2e8f0;font-size:1em;outline:none}
+.form-group select:focus,.form-group input:focus{border-color:#60a5fa}
+
+.btn{width:100%;padding:12px;background:linear-gradient(135deg,#3b82f6,#7c3aed);color:#fff;border:none;border-radius:8px;font-size:1.05em;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+.btn:hover{opacity:0.9}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.hidden{display:none}
+
+/* Loading */
+.loading{text-align:center;padding:30px}
+.spinner{width:40px;height:40px;border:3px solid #1e293b;border-top-color:#60a5fa;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{color:#94a3b8;font-size:0.95em}
+.loading .scan-text{animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Routes */
+.route{display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid #1e293b;border-radius:8px;margin-bottom:10px;transition:all 0.3s;opacity:0;transform:translateY(10px)}
+.route.show{opacity:1;transform:translateY(0)}
+.route.best{border-color:#22c55e;background:rgba(34,197,94,0.08)}
+.route-left{flex:1}
+.route-path{font-size:0.95em;font-weight:500;color:#e2e8f0}
+.route-meta{font-size:0.8em;color:#64748b;margin-top:2px}
+.route-right{text-align:right}
+.route-score{font-size:1.4em;font-weight:700}
+.route.best .route-score{color:#22c55e}
+.route-cost{font-size:0.8em;color:#94a3b8}
+.best-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75em;background:#22c55e;color:#0a0e17;font-weight:600;margin-left:8px}
+.ai-selected{text-align:center;margin-top:16px;padding:12px;background:rgba(34,197,94,0.1);border-radius:8px;border:1px solid rgba(34,197,94,0.2);color:#22c55e;font-weight:500}
+
+/* Fee comparison */
+.fee-bar-row{display:flex;align-items:center;margin-bottom:12px;gap:12px}
+.fee-label{width:110px;font-size:0.85em;color:#94a3b8;text-align:right;flex-shrink:0}
+.fee-bar-wrap{flex:1;background:#0f1525;border-radius:6px;height:28px;overflow:hidden;position:relative}
+.fee-bar{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:0.8em;font-weight:600;color:#fff;transition:width 1.5s ease;width:0}
+.fee-bar.wu{background:#ef4444}
+.fee-bar.wise{background:#f59e0b}
+.fee-bar.rmtai{background:#22c55e}
+.fee-amount{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:0.8em;color:#94a3b8}
+
+/* Receipt */
+.receipt{border:1px dashed #2d3748;border-radius:8px;padding:20px}
+.receipt-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a2236}
+.receipt-row:last-child{border-bottom:none}
+.receipt-label{color:#64748b;font-size:0.9em}
+.receipt-value{font-weight:500;font-size:0.9em}
+.receipt-value.green{color:#22c55e}
+.receipt-hash{font-family:monospace;font-size:0.75em;color:#60a5fa;word-break:break-all}
+.settled{text-align:center;margin-top:16px;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;color:#22c55e;font-size:0.95em}
+
+footer{text-align:center;padding:30px 20px;color:#475569;font-size:0.85em}
+footer a{color:#64748b;margin:0 10px}
+footer a:hover{color:#60a5fa}
+.footer-links{margin-top:8px}
+
+.try-again{text-align:center;margin-top:16px}
+.try-again button{padding:8px 20px;background:transparent;border:1px solid #3b82f6;color:#3b82f6;border-radius:6px;cursor:pointer;font-size:0.9em}
+.try-again button:hover{background:rgba(59,130,246,0.1)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>RemittAI Testnet Demo</h1>
+  <p>Try AI-powered remittances on Stellar testnet</p>
+  <span class="badge">Simulation &mdash; No real funds</span>
+</header>
+
+<div class="container">
+
+  <!-- Send Form -->
+  <div class="card" id="send-card">
+    <h2>Send Money</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label>From</label>
+        <select id="from-currency">
+          <option value="USD">USD (US Dollar)</option>
+          <option value="EUR">EUR (Euro)</option>
+          <option value="GBP">GBP (British Pound)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>To</label>
+        <select id="to-currency">
+          <option value="PHP">PHP (Philippines)</option>
+          <option value="MXN">MXN (Mexico)</option>
+          <option value="NGN">NGN (Nigeria)</option>
+          <option value="KES">KES (Kenya)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Amount</label>
+        <input type="number" id="amount" value="200" min="1" max="10000">
+      </div>
+    </div>
+    <button class="btn" id="send-btn" onclick="startTransfer()">Send with AI Routing</button>
+  </div>
+
+  <!-- Loading -->
+  <div class="card hidden" id="loading-card">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p class="scan-text" id="loading-text">AI Router scanning Stellar DEX paths...</p>
+    </div>
+  </div>
+
+  <!-- Routes -->
+  <div class="card hidden" id="routes-card">
+    <h2>AI Route Analysis</h2>
+    <div id="routes-list"></div>
+    <div class="ai-selected hidden" id="ai-selected"></div>
+  </div>
+
+  <!-- Fee Comparison -->
+  <div class="card hidden" id="fees-card">
+    <h2>Fee Comparison</h2>
+    <div id="fee-bars"></div>
+  </div>
+
+  <!-- Receipt -->
+  <div class="card hidden" id="receipt-card">
+    <h2>Transfer Receipt</h2>
+    <div class="receipt" id="receipt"></div>
+    <div class="settled" id="settled"></div>
+    <div class="try-again"><button onclick="resetDemo()">Send Another</button></div>
+  </div>
+
+</div>
+
+<footer>
+  <div>RemittAI ($RMTAI) &mdash; AI-Powered Remittances on Stellar</div>
+  <div class="footer-links">
+    <a href="https://remittai.com">Website</a>
+    <a href="https://github.com/remittai/remittai-protocol">GitHub</a>
+    <a href="https://x.com/REMITTai_">@REMITTai_</a>
+  </div>
+</footer>
+
+<script>
+const RATES = {
+  USD: { PHP: 56.2, MXN: 17.1, NGN: 1548, KES: 129.5 },
+  EUR: { PHP: 61.0, MXN: 18.6, NGN: 1682, KES: 140.8 },
+  GBP: { PHP: 71.3, MXN: 21.7, NGN: 1965, KES: 164.5 }
+};
+
+const ROUTES_DATA = {
+  PHP: [
+    { path: ['USDC','XLM','PHP'], score: 94, cost: 0.45, hops: 3 },
+    { path: ['USDC','PHP'], score: 87, cost: 0.62, hops: 2 },
+    { path: ['XLM','PHP'], score: 79, cost: 0.78, hops: 2 }
+  ],
+  MXN: [
+    { path: ['USDC','MXN'], score: 92, cost: 0.48, hops: 2 },
+    { path: ['USDC','XLM','MXN'], score: 85, cost: 0.65, hops: 3 },
+    { path: ['XLM','MXN'], score: 76, cost: 0.82, hops: 2 }
+  ],
+  NGN: [
+    { path: ['USDC','XLM','NGN'], score: 91, cost: 0.52, hops: 3 },
+    { path: ['USDC','NGN'], score: 83, cost: 0.71, hops: 2 },
+    { path: ['XLM','NGN'], score: 74, cost: 0.89, hops: 2 }
+  ],
+  KES: [
+    { path: ['USDC','XLM','KES'], score: 93, cost: 0.47, hops: 3 },
+    { path: ['USDC','KES'], score: 86, cost: 0.58, hops: 2 },
+    { path: ['XLM','KES'], score: 78, cost: 0.75, hops: 2 }
+  ]
+};
+
+function randomHash() {
+  const chars = 'abcdef0123456789';
+  let h = '';
+  for (let i = 0; i < 64; i++) h += chars[Math.floor(Math.random() * chars.length)];
+  return h;
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function show(id) { document.getElementById(id).classList.remove('hidden'); }
+function hide(id) { document.getElementById(id).classList.add('hidden'); }
+
+async function startTransfer() {
+  const from = document.getElementById('from-currency').value;
+  const to = document.getElementById('to-currency').value;
+  const amount = parseFloat(document.getElementById('amount').value) || 200;
+
+  document.getElementById('send-btn').disabled = true;
+
+  // Show loading
+  show('loading-card');
+  hide('routes-card');
+  hide('fees-card');
+  hide('receipt-card');
+
+  const loadingTexts = [
+    'AI Router scanning Stellar DEX paths...',
+    'Querying order books and AMM pools...',
+    'Scoring routes by cost, liquidity, and hops...',
+    'Checking FX rates across corridors...',
+    'Optimal route found!'
+  ];
+
+  const loadingEl = document.getElementById('loading-text');
+  for (let i = 0; i < loadingTexts.length; i++) {
+    loadingEl.textContent = loadingTexts[i];
+    await sleep(500);
+  }
+
+  await sleep(300);
+  hide('loading-card');
+
+  // Show routes
+  const routes = ROUTES_DATA[to];
+  const routesList = document.getElementById('routes-list');
+  routesList.innerHTML = '';
+
+  routes.forEach((r, i) => {
+    const fullPath = [from, ...r.path];
+    const div = document.createElement('div');
+    div.className = 'route' + (i === 0 ? ' best' : '');
+    div.innerHTML = `
+      <div class="route-left">
+        <div class="route-path">${fullPath.join(' &rarr; ')}${i === 0 ? '<span class="best-badge">BEST</span>' : ''}</div>
+        <div class="route-meta">${r.hops} hops &middot; ~5 sec &middot; ${r.cost}% fee</div>
+      </div>
+      <div class="route-right">
+        <div class="route-score">${r.score}</div>
+        <div class="route-cost">AI Score</div>
+      </div>
+    `;
+    routesList.appendChild(div);
+    setTimeout(() => div.classList.add('show'), 200 * (i + 1));
+  });
+
+  show('routes-card');
+
+  await sleep(1200);
+
+  const bestRoute = routes[0];
+  const rate = RATES[from][to];
+  const fee = amount * (bestRoute.cost / 100);
+  const netAmount = amount - fee;
+  const recipientGets = (netAmount * rate).toFixed(2);
+
+  const aiSel = document.getElementById('ai-selected');
+  aiSel.textContent = `AI selected Route 1 — recipient gets ${Number(recipientGets).toLocaleString()} ${to}`;
+  aiSel.classList.remove('hidden');
+
+  await sleep(800);
+
+  // Fee comparison
+  const wuFee = (amount * 0.062).toFixed(2);
+  const wiseFee = (amount * 0.015).toFixed(2);
+  const rmtaiFee = fee.toFixed(2);
+
+  const feeBars = document.getElementById('fee-bars');
+  feeBars.innerHTML = `
+    <div class="fee-bar-row">
+      <div class="fee-label">Western Union</div>
+      <div class="fee-bar-wrap">
+        <div class="fee-bar wu" id="bar-wu">6.2%</div>
+        <span class="fee-amount">$${wuFee}</span>
+      </div>
+    </div>
+    <div class="fee-bar-row">
+      <div class="fee-label">Wise</div>
+      <div class="fee-bar-wrap">
+        <div class="fee-bar wise" id="bar-wise">1.5%</div>
+        <span class="fee-amount">$${wiseFee}</span>
+      </div>
+    </div>
+    <div class="fee-bar-row">
+      <div class="fee-label">RemittAI</div>
+      <div class="fee-bar-wrap">
+        <div class="fee-bar rmtai" id="bar-rmtai">${bestRoute.cost}%</div>
+        <span class="fee-amount">$${rmtaiFee}</span>
+      </div>
+    </div>
+  `;
+  show('fees-card');
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.getElementById('bar-wu').style.width = '100%';
+      document.getElementById('bar-wise').style.width = `${(1.5/6.2)*100}%`;
+      document.getElementById('bar-rmtai').style.width = `${(bestRoute.cost/6.2)*100}%`;
+    });
+  });
+
+  await sleep(1000);
+
+  // Receipt
+  const txHash = randomHash();
+  const settleTime = (4.2 + Math.random() * 1.6).toFixed(1);
+  const receipt = document.getElementById('receipt');
+  receipt.innerHTML = `
+    <div class="receipt-row">
+      <span class="receipt-label">Amount Sent</span>
+      <span class="receipt-value">${amount.toFixed(2)} ${from}</span>
+    </div>
+    <div class="receipt-row">
+      <span class="receipt-label">Fee</span>
+      <span class="receipt-value">${rmtaiFee} ${from} (${bestRoute.cost}%)</span>
+    </div>
+    <div class="receipt-row">
+      <span class="receipt-label">Exchange Rate</span>
+      <span class="receipt-value">1 ${from} = ${rate.toFixed(2)} ${to}</span>
+    </div>
+    <div class="receipt-row">
+      <span class="receipt-label">Recipient Gets</span>
+      <span class="receipt-value green">${Number(recipientGets).toLocaleString()} ${to}</span>
+    </div>
+    <div class="receipt-row">
+      <span class="receipt-label">Savings vs WU</span>
+      <span class="receipt-value green">$${(wuFee - rmtaiFee).toFixed(2)} saved</span>
+    </div>
+    <div class="receipt-row">
+      <span class="receipt-label">Transaction</span>
+      <span class="receipt-value"><a href="https://stellar.expert/explorer/testnet" target="_blank" class="receipt-hash">${txHash.slice(0, 16)}...${txHash.slice(-8)}</a></span>
+    </div>
+  `;
+
+  document.getElementById('settled').innerHTML = `Settled in ${settleTime} seconds on Stellar testnet`;
+  show('receipt-card');
+  document.getElementById('send-btn').disabled = false;
+}
+
+function resetDemo() {
+  hide('routes-card');
+  hide('fees-card');
+  hide('receipt-card');
+  hide('loading-card');
+  document.getElementById('ai-selected').classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
